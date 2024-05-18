@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA10lEQVR4AWPAB14l8QS8KWE9/7aa+fzbSuYGBlLAcz8hh1fpXP8/dDL8/zKb4f+Hdsb/r3M4Gog3wFO44VUG0IAuoAFzoAZkcu0n2oBn1qIFL8IF/r8pZPsP9AKYfhHFv55oA55oigs8NRe7D/TK/xfBgv+B9Pvn3sIGhHV6T1YA4gYQlnRr7c+yjHxfZBP6v8gu1AGmhFhD3gPxfyi+z0AqAGtCGJBAqmYDSm0vIM92hAH7QZqh4SBAsn4k28EpjxIDFMg14DwYkwuAmgPA4UAmQMQEEQAAMxF5Mxxj/+MAAAAASUVORK5CYII=">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apertura de Proveedor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f3f3f3;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        form {
+            display: grid;
+            grid-gap: 20px;
+        }
+        label {
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+        }
+        input[type="number"],
+        input[type="date"],
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="password"],
+        select {
+            width: calc(100% - 10px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        .checkbox-label {
+            display: inline-block;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+        .checkbox-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-gap: 20px;
+        }
+        .grid-item {
+            display: flex;
+            flex-direction: column;
+        }
+        button[type="submit"] {
+            background-color: #343ec9;
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            justify-self: center;
+        }
+        button[type="submit"]:hover {
+            background-color: #311bab;
+        }
+        .tooltip {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 14px;
+            display: none;
+        }
+        .checkbox-label:hover + .tooltip {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Apertura de Proveedor</h1>
+        <form id="facturaForm">
+            
+            <div>
+                <label for="department">Departamento:</label>
+                <input type="text" id="department" name="department" value="AREA EMISORA MICE" readonly>
+            </div>
+            <div>
+                <label for="seller">Vendedor:</label>
+                <select id="seller" name="seller" required>
+                    <option value="">Responsable:</option>
+                        <option value="CGO">CGO</option>
+                        <option value="CPS">CPS</option>
+                        <option value="MPF">MPF</option>
+                        <option value="NPL">NPL</option>
+                        <option value="ALOT">ALOT</option>
+                        <option value="AAGR">AAGR</option>
+                        <option value="AAGR">IVL</option>
+                </select>
+            </div>
+            <div>
+                <label for="client_name">Nombre del Proveedor:</label>
+                <input type="text" id="client_name" name="client_name" required>
+            </div>
+            <div class="grid-container">
+                <div class="grid-item">
+                    <label for="phone">Dirección:</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                <div class="grid-item">
+                    <label for="email">Código Postal:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+            </div>
+           
+            <div class="grid-container">
+                <div class="grid-item">
+                    <label for="phone">Número de Teléfono:</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                <div class="grid-item">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+            </div>
+            <div>
+                <h2 for="datos_fiscales">Datos Fiscales</h2>
+            </div>
+            <div>
+                <label for="razon_social">Razón Social:</label>
+                <input type="text" id="razon_social" name="razon_social" required>
+            </div>
+            <div>
+                <label for="domicilio_fiscal">Domicilio:</label>
+                <input type="text" id="domicilio_fiscal" name="domicilio_fiscal" required>
+            </div>
+            <div class="grid-container">
+                <div class="grid-item">
+                    <label for="phone">Código postal:</label>
+                    <input type="number" id="zip" name="zip" required>
+                </div>
+                <div class="grid-item">
+                    <label for="email">Domicilio:</label>
+                    <input type="text" id="domicilio" required>
+                </div>
+            </div>
+            <div>
+                <label for="tipo_servicio">Tipo de Servicio:</label>
+                <input type="text" id="tipo_servicio" name="tipo_servicio" required>
+            </div>
+            <div class="grid-container">
+                <div class="grid-item">
+                    <label for="iban">IBAN:</label>
+                    <input type="text" id="iban" name="iban" required>
+                </div>
+                <div class="grid-item">
+                    <label for="bic">BIC:</label>
+                    <input type="text" id="bic" name="bic" required>
+                </div>
+            </div>
+          
+           
+            <button type="submit">Enviar</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presupuesto</title>
+    <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f3f3f3;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        form {
+            display: grid;
+            grid-gap: 20px;
+        }
+        label {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        button {
+            background-color: #343ec9;
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            text-align: center;
+        }
+        button:hover {
+            background-color: #311bab;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Contrato Viajes Combinados</h1>
+        <form id="reservaForm">
+            <div>
+                <label for="trip_name">Nombre del Grupo/Viaje:</label>
+                <input type="text" id="trip_name" name="trip_name" required>
+            </div>
+            <div>
+                <label for="title_budget">Título del viaje:</label>
+                <input type="text" id="title_budget" name="title_budget" required>
+            </div>
+            <div>
+                <label for="text_budget">Descripción del viaje:</label>
+                <textarea id="text_budget" name="text_budget" rows="4" required></textarea>
+            </div>
+            <div>
+                <label for="to_add_money">IBAN:</label>
+                <input type="text" id="to_add_money" name="to_add_money" required>
+            </div>
+            <div>
+                <label for="add_money_concept">Concepto:</label>
+                <input type="text" id="add_money_concept" name="add_money_concept" required>
+            </div>
+            <div>
+                <label for="tipo_servicio">PVP final:</label>
+                <input type="text" step="0.01" id="tipo_servicio" name="tipo_servicio" required>
+            </div>
+            <button type="button" onclick="generatePDF()">Enviar</button>
+        </form>
+    </div>
+
+    <script>
+       
+
+        function generatePDF() {
+            const trip_name = document.getElementById('trip_name').value;
+            const title_budget = document.getElementById('title_budget').value;
+            const text_budget = document.getElementById('text_budget').value;
+            const to_add_money = document.getElementById('to_add_money').value;
+            const add_money_concept = document.getElementById('add_money_concept').value;
+            const price = document.getElementById('tipo_servicio').value
+console.log(text_budget)
+            const date = new Date();
+            const months = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+            const day = date.getDate();
+            const month = months[date.getMonth()];
+            const year = date.getFullYear();
+console.log(price)
+            const data = {
+                trip_name,
+                title_budget,
+                text_budget,
+                to_add_money,
+                add_money_concept,
+                price,
+                day,
+                month,
+                year
+            };
+
+            fetch('/generate-pdf-budget', {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.blob())
+            .then(blob => {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'budget.pdf';
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+        function stripHtmlTags(html) {
+    return html.replace(/(<([^>]+)>)/ig, ''); // Esta expresión regular elimina todas las etiquetas HTML y su contenido
+}
+    </script>
+</body>
+</html>

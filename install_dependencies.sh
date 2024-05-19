@@ -25,3 +25,6 @@ mkdir -p uploads
 
 # Permisos de escritura para la carpeta de subidas
 chmod 777 uploads
+
+# Ejecutar el archivo index.js
+node index.js

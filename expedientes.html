@@ -4,24 +4,100 @@
     <link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA10lEQVR4AWPAB14l8QS8KWE9/7aa+fzbSuYGBlLAcz8hh1fpXP8/dDL8/zKb4f+Hdsb/r3M4Gog3wFO44VUG0IAuoAFzoAZkcu0n2oBn1qIFL8IF/r8pZPsP9AKYfhHFv55oA55oigs8NRe7D/TK/xfBgv+B9Pvn3sIGhHV6T1YA4gYQlnRr7c+yjHxfZBP6v8gu1AGmhFhD3gPxfyi+z0AqAGtCGJBAqmYDSm0vIM92hAH7QZqh4SBAsn4k28EpjxIDFMg14DwYkwuAmgPA4UAmQMQEEQAAMxF5Mxxj/+MAAAAASUVORK5CYII=">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/sources/css/apps.css">
     <title>Creador de Expedientes</title>
-    
-       
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f3f3f3;
+            background-image: url('tu-imagen-de-fondo.jpg'); /* Cambia 'tu-imagen-de-fondo.jpg' por la ruta de tu imagen de fondo */
+            background-size: cover;
+            background-position: center;
+            background-blur: 10px; /* Desenfoque de fondo */
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8); /* Fondo del contenedor principal con opacidad */
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px; /* Agregar margen inferior */
+        }
+        form {
+            display: grid;
+            grid-gap: 20px;
+        }
+        label {
+            font-weight: bold;
+            margin-bottom: 10px; /* Agregar margen inferior */
+        }
+        input[type="text"],
+        input[type="number"],
+        textarea,
+        select,
+        input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+            margin-top: 8px;
+        }
+        input[type="file"] {
+            border: none;
+            padding: 0;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-gap: 20px;
+        }
+        .grid-item {
+            display: flex;
+            flex-direction: column;
+        }
+        .grid-item:nth-child(odd) {
+            margin-bottom: 15px;
+        }
+        button[type="submit"] {
+            background-color: #343ec9;
+            color: white;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button[type="submit"]:hover {
+            background-color: #311bab;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <h1>Creador de Expedientes</h1>
-        <form id="facturaForm" enctype="multipart/form-data">
+        <form method="post" onsubmit="sendData(); return false;">
             <div>
                 <label for="expediente">Número de reserva:</label>
                 <input type="text" id="expediente" name="expediente" required>
+            </div>
+            <div>
+                <label for="expediente">Cliente:</label>
+                <input type="text" id="cliente" name="cliente" required>
             </div>
             <div class="grid-container">
                 <div class="grid-item">
                     <label for="fact_int">Factura Interna:</label>
                     <input type="text" id="fact_int" name="fact_int" required>
                 </div>
+                
                 <div class="grid-item">
                     <label for="payment">Forma de pago:</label>
                     <select id="payment" name="payment" required>
@@ -41,13 +117,13 @@
                     <label for="people">Responsable</label>
                     <select id="people" name="people" required>
                         <option value="">Responsable:</option>
-                        <option value="responsable1">CGO</option>
-                        <option value="responsable2">CPS</option>
-                        <option value="responsable3">MPF</option>
-                        <option value="responsable4">NPL</option>
-                        <option value="responsable5">ALOT</option>
-                        <option value="responsable6">AAGR</option>
-                        <option value="AAGR">IVL</option>
+                        <option value="CGO">CGO</option>
+                        <option value="CPS">CPS</option>
+                        <option value="MPF">MPF</option>
+                        <option value="NPL">NPL</option>
+                        <option value="ALOT">ALOT</option>
+                        <option value="AAGR">AAGR</option>
+                        <option value="IVL">IVL</option>
                     </select>
                 </div>
                 
@@ -61,11 +137,110 @@
                 <input type="text" id="observaciones" name="observaciones">
             </div>
             <div>
-                <label for="files">Adjuntar archivos:</label>
-                <input type="file" id="files" name="files" multiple>
+                <label for="files">Adjuntar archivos: Próximamente</label>
+                
             </div>
             <button type="submit">Enviar</button>
         </form>
     </div>
+    <script>
+       function obtenerHoraCanarias() {
+    // Obtener la fecha y hora actual en UTC
+    var fechaUTC = new Date();
+
+    // Aplicar el desplazamiento horario de las Islas Canarias (UTC+0)
+    var fechaCanarias = new Date(fechaUTC.getTime() + (1 * 60 * 60 * 1000));
+
+    // Obtener los componentes de hora y minutos
+    var horas = fechaCanarias.getUTCHours();
+    var minutos = fechaCanarias.getUTCMinutes();
+
+    // Asegurarse de que los minutos tengan dos dígitos (por ejemplo, 5 -> 05)
+    if (minutos < 10) {
+        minutos = "0" + minutos;
+    }
+
+    // Formatear la hora en HH:MM
+    var horaCanarias = horas + ":" + minutos;
+
+    // Devolver la hora formateada
+    return horaCanarias;
+}
+
+// Ejemplo de uso
+var horaCanariasActual = obtenerHoraCanarias();
+
+function sendData() {
+    var date = new Date();
+    const months = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
+    var day = date.getDate();
+    var month = months[date.getMonth()];
+    var year = date.getUTCFullYear();
+    var expediente = document.getElementById('expediente').value;
+    var date = `${day}/${month}/${year}`;
+    var interal_invoice = document.getElementById('fact_int').value;
+    var people = document.getElementById('people').value;
+    var time = horaCanariasActual;
+    var cliente = document.getElementById('cliente').value;
+    var payment = document.getElementById('payment').value;
+    var text = document.getElementById('text').value;
+    var observaciones = document.getElementById('observaciones').value;
+    var pax = document.getElementById('pax').value;
+
+    if (expediente && interal_invoice && people && cliente && payment && text && observaciones) {
+        try {
+            const requestBody = {
+                expediente: expediente,
+                date: date,
+                internal_invoice: interal_invoice,
+                people: people,
+                time: time,
+                cliente: cliente,
+                payment: payment,
+                text: text,
+                pax: pax,
+                observaciones: observaciones
+            };
+
+            fetch('http://79.143.94.17:3000/generate-pdf-expedientes', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestBody)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.blob();
+            })
+            .then(blob => {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = url;
+                a.download = 'contrato_viajes_combinados.pdf';
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+                alert('There was a problem with the fetch operation: ' + error.message);
+            });
+        } catch (error) {
+            console.error('There was an error:', error);
+            alert('There was an error: ' + error.message);
+        }
+    } else {
+        alert('Por favor, complete todos los campos.');
+    }
+}
+
+
+
+
+    </script>
 </body>
 </html>

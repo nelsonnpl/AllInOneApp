@@ -5,8 +5,102 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contrato de Viajes Combinados</title>
-    <link rel="stylesheet" href="/sources/css/apps.css">
-   
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f3f3f3;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        form {
+            display: grid;
+            grid-gap: 20px;
+        }
+        label {
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+        }
+        input[type="number"],
+        input[type="date"],
+        input[type="text"],
+        input[type="checkbox"],
+        input[type="time"],
+        select {
+            width: calc(100% - 10px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        .checkbox-label {
+            display: inline-block;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+        .checkbox-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-gap: 20px;
+        }
+        .grid-item {
+            display: flex;
+            flex-direction: column;
+        }
+        button[type="submit"] {
+            background-color: #343ec9;
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            justify-self: center;
+        }
+        button[type="submit"]:hover {
+            background-color: #311bab;
+        }
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 40px;
+            height: 40px;
+            background-color: #ff6347;
+            border-radius: 8px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+        .back-btn i {
+            color: white;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -14,7 +108,7 @@
             <i><</i>
         </div>
         <h1>Contrato de Viajes Combinados</h1>
-        <form id="reservaForm">
+        <form method="post" onsubmit="guardarDatos(); return false;">
             <div>
                 <label for="date">Fecha:</label>
                 <input type="date" id="date" name="date" required>
@@ -28,8 +122,20 @@
                 <input type="text" id="client_name" name="client_name" required>
             </div>
             <div>
+                <label for="client_phone">Número del cliente:</label>
+                <input type="text" id="client_phone" name="client_phone" required>
+            </div>
+            <div>
                 <label for="client_id">Documento identidad:</label>
                 <input type="text" id="client_id" name="client_id" required>
+            </div>
+            <div>
+                <label for="people">Número de personas:</label>
+                <input type="text" id="people" name="people" required>
+            </div>
+            <div>
+                <label for="min_people">Número mínimo de personas:</label>
+                <input type="text" id="min_people" name="min_people" required>
             </div>
             <div class="grid-container">
                 <div class="grid-item">
@@ -54,8 +160,8 @@
                     <label for="apto_noapto">Viaje apto para PMR:</label>
                     <select id="apto_noapto" name="apto_noapto" required>
                         <option value="">Seleccione...</option>
-                        <option value="si">Sí</option>
-                        <option value="no">No</option>
+                        <option value="si">apto</option>
+                        <option value="no">no apto</option>
                     </select>
                 </div>
                 <div class="option-box">
@@ -67,12 +173,82 @@
                     </select>
                 </div>
             </div>
-            <div>
-                <label for="files">Adjuntar programa y listado pasajeros:</label>
-                <input type="file" id="files" name="files" multiple>
-            </div>
+            
             <button type="submit">Enviar</button>
         </form>
     </div>
+    <script>
+        function guardarDatos() {
+    var date = new Date();
+    const months = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+    const name_group = document.getElementById('name_group').value;
+    const client_name = document.getElementById('client_name').value;
+    const client_phone = document.getElementById('client_phone').value;
+    const client_id = document.getElementById('client_id').value;
+    const in_date = document.getElementById('in').value;
+    const in_time = document.getElementById('time_in').value;
+    const out_date = document.getElementById('out').value;
+    const out_time = document.getElementById('time_out').value;
+    const apto_noapto = document.getElementById('apto_noapto').value;
+    const yes_no = document.getElementById('yes_no').value;
+    const people = document.getElementById('people').value;
+const min_people = document.getElementById('min_people').value;
+    var day = date.getDate();
+    var month = months[date.getMonth()];
+    var year = date.getUTCFullYear();
+
+    try {
+        const requestBody = {
+            day:day,
+            month:month,
+            name_group: name_group,
+            client_name: client_name,
+            client_id: client_id,
+            client_phone:client_phone,
+            people:people,
+            in: in_date,
+            time_in: in_time,
+            out: out_date,
+            time_out: out_time,
+            apto_noapto: apto_noapto,
+            yes_no: yes_no,
+            min_people:min_people
+        };
+
+        fetch('http://79.143.94.17:3000/generate-pdf-contratoviajes', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestBody)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.blob();
+        })
+        .then(blob => {
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            a.download = 'contrato_viajes_combinados.pdf';
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+            alert('There was a problem with the fetch operation: ' + error.message);
+        });
+    } catch (error) {
+        console.error('There was an error:', error);
+        alert('There was an error: ' + error.message);
+    }
+}
+
+    </script>
 </body>
+
 </html>

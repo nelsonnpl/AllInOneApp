@@ -4,9 +4,9 @@
     <link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA10lEQVR4AWPAB14l8QS8KWE9/7aa+fzbSuYGBlLAcz8hh1fpXP8/dDL8/zKb4f+Hdsb/r3M4Gog3wFO44VUG0IAuoAFzoAZkcu0n2oBn1qIFL8IF/r8pZPsP9AKYfhHFv55oA55oigs8NRe7D/TK/xfBgv+B9Pvn3sIGhHV6T1YA4gYQlnRr7c+yjHxfZBP6v8gu1AGmhFhD3gPxfyi+z0AqAGtCGJBAqmYDSm0vIM92hAH7QZqh4SBAsn4k28EpjxIDFMg14DwYkwuAmgPA4UAmQMQEEQAAMxF5Mxxj/+MAAAAASUVORK5CYII=">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apertura de Proveedor</title>
+    <title>Contrato de Viajes Combinados</title>
     <style>
-        body {
+         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
@@ -101,91 +101,237 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Apertura de Proveedor</h1>
-        <form id="facturaForm">
-            
-            <div>
-                <label for="department">Departamento:</label>
-                <input type="text" id="department" name="department" value="AREA EMISORA MICE" readonly>
-            </div>
-            <div>
-                <label for="seller">Vendedor:</label>
-                <select id="seller" name="seller" required>
-                    <option value="">Responsable:</option>
-                        <option value="CGO">CGO</option>
-                        <option value="CPS">CPS</option>
-                        <option value="MPF">MPF</option>
-                        <option value="NPL">NPL</option>
-                        <option value="ALOT">ALOT</option>
-                        <option value="AAGR">AAGR</option>
-                        <option value="AAGR">IVL</option>
-                </select>
-            </div>
-            <div>
-                <label for="client_name">Nombre del Proveedor:</label>
-                <input type="text" id="client_name" name="client_name" required>
-            </div>
-            <div class="grid-container">
-                <div class="grid-item">
-                    <label for="phone">Dirección:</label>
-                    <input type="tel" id="phone" name="phone" required>
+    <body>
+        <div class="container">
+            <h1>Apertura de Proveedor</h1>
+            <form id="facturaForm">
+                
+                <div>
+                    <label for="department">Departamento:</label>
+                    <input type="text" id="department" name="department" value="MICE" readonly>
                 </div>
-                <div class="grid-item">
-                    <label for="email">Código Postal:</label>
-                    <input type="email" id="email" name="email" required>
+                <div>
+                    <label for="seller">Vendedor:</label>
+                    <select id="seller" name="seller" required>
+                        <option value="">Responsable:</option>
+                            <option value="CGO">CGO</option>
+                            <option value="CPS">CPS</option>
+                            <option value="MPF">MPF</option>
+                            <option value="NPL">NPL</option>
+                            <option value="ALOT">ALOT</option>
+                            <option value="AAGR">AAGR</option>
+                            <option value="AAGR">IVL</option>
+                    </select>
                 </div>
-            </div>
-           
-            <div class="grid-container">
-                <div class="grid-item">
-                    <label for="phone">Número de Teléfono:</label>
-                    <input type="tel" id="phone" name="phone" required>
+                <div>
+                    <label for="client_name">Nombre del Proveedor:</label>
+                    <input type="text" id="client_name" name="client_name" required>
                 </div>
-                <div class="grid-item">
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" required>
+                <div>
+                    <label for="poblacion">Poblacion:</label>
+                    <input type="text" id="poblacion" name="poblacion" required>
                 </div>
-            </div>
-            <div>
-                <h2 for="datos_fiscales">Datos Fiscales</h2>
-            </div>
-            <div>
-                <label for="razon_social">Razón Social:</label>
-                <input type="text" id="razon_social" name="razon_social" required>
-            </div>
-            <div>
-                <label for="domicilio_fiscal">Domicilio:</label>
-                <input type="text" id="domicilio_fiscal" name="domicilio_fiscal" required>
-            </div>
-            <div class="grid-container">
-                <div class="grid-item">
-                    <label for="phone">Código postal:</label>
-                    <input type="number" id="zip" name="zip" required>
+                <div>
+                    <label for="poblacion">NIF:</label>
+                    <input type="text" id="nif" name="nif" required>
                 </div>
-                <div class="grid-item">
-                    <label for="email">Domicilio:</label>
-                    <input type="text" id="domicilio" required>
+                <div class="grid-container">
+                    <div class="grid-item">
+                        <label for="phone">Dirección:</label>
+                        <input type="text" id="direccion" name="direccion" required>
+                    </div>
+                    <div class="grid-item">
+                        <label for="email">Código Postal:</label>
+                        <input type="text" id="cp" name="cp" required>
+                    </div>
                 </div>
-            </div>
-            <div>
-                <label for="tipo_servicio">Tipo de Servicio:</label>
-                <input type="text" id="tipo_servicio" name="tipo_servicio" required>
-            </div>
-            <div class="grid-container">
-                <div class="grid-item">
-                    <label for="iban">IBAN:</label>
-                    <input type="text" id="iban" name="iban" required>
+               
+                <div class="grid-container">
+                    <div class="grid-item">
+                        <label for="phone">Número de Teléfono:</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                    <div class="grid-item">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
                 </div>
-                <div class="grid-item">
-                    <label for="bic">BIC:</label>
-                    <input type="text" id="bic" name="bic" required>
+                <div>
+                    <h2 for="datos_fiscales">Datos Fiscales</h2>
                 </div>
-            </div>
-          
-           
-            <button type="submit">Enviar</button>
-        </form>
-    </div>
+                <div>
+                    <label for="title">Titulo:</label>
+                    <input type="text" id="title" name="title" required>
+                </div>
+                <div>
+                    <label for="razon_social">Razón Social:</label>
+                    <input type="text" id="razon_social" name="razon_social" required>
+                </div>
+                <div>
+                    <label for="domicilio_fiscal">Domicilio:</label>
+                    <input type="text" id="domicilio_fiscal" name="domicilio_fiscal" required>
+                </div>
+                <div class="grid-container">
+                    <div class="grid-item">
+                        <label for="phone">Código postal:</label>
+                        <input type="number" id="zip" name="zip" required>
+                    </div>
+                    <div class="grid-item">
+                        <label for="email">Domicilio:</label>
+                        <input type="text" id="domicilio" required>
+                    </div>
+                </div>
+                <div>
+                    <label for="tipo_servicio">Tipo de Servicio:</label>
+                    <input type="text" id="tipo_servicio" name="tipo_servicio" required>
+                </div>
+                <div class="grid-container">
+                    <div class="grid-item">
+                        <label for="iban">IBAN:</label>
+                        <input type="text" id="iban" name="iban" required>
+                    </div>
+                    <div class="grid-item">
+                        <label for="bic">BIC:</label>
+                        <input type="text" id="bic" name="bic" required>
+                    </div>
+                </div>
+              
+               
+                <button type="button" onclick="guardarDatos()">Guardar Datos</button>
+            </form>
+        </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/docxtemplater/3.45.0/docxtemplater.js"></script>
+    <script src="https://unpkg.com/pizzip@3.1.6/dist/pizzip.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.js"></script>
+    <script src="https://unpkg.com/pizzip@3.1.6/dist/pizzip-utils.js"></script>
+    <script>
+      function guardarDatos() {
+    var date = new Date();
+    const months = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+    const department = document.getElementById('department').value;
+    const seller = document.getElementById('seller').value;
+    const clientName = document.getElementById('client_name').value;
+    const poblacion = document.getElementById("poblacion").value;
+    const direccion = document.getElementById('direccion').value;
+    const tel = document.getElementById('phone').value;
+    const cp = document.getElementById('cp').value;
+    const email = document.getElementById('email').value;
+    const razonSocial = document.getElementById('razon_social').value;
+    const domicilioFiscal = document.getElementById('domicilio_fiscal').value;
+    const zipC = document.getElementById('zip').value;
+    const domicilio = document.getElementById('domicilio').value;
+    const tipoServicio = document.getElementById('tipo_servicio').value;
+    const iban = document.getElementById('iban').value;
+    const bic = document.getElementById('bic').value;
+    const nif = document.getElementById('nif').value;
+    const title = document.getElementById('title').value;
+
+    var day = date.getDate();
+    var month = months[date.getMonth()];
+    var year = date.getUTCFullYear();
+
+    if (!department) {
+        alert('Por favor, complete el campo "Departamento".');
+        return;
+    }
+    if (!seller) {
+        alert('Por favor, seleccione un "Vendedor".');
+        return;
+    }
+    if (!clientName) {
+        alert('Por favor, complete el campo "Nombre del Proveedor".');
+        return;
+    }
+    if (!tel) {
+        alert('Por favor, complete el campo "Número de Teléfono".');
+        return;
+    }
+    if (!cp) {
+        alert('Por favor, complete el campo "Código Postal".');
+        return;
+    }
+    if (!email) {
+        alert('Por favor, complete el campo "Email".');
+        return;
+    }
+    if (!razonSocial) {
+        alert('Por favor, complete el campo "Razón Social".');
+        return;
+    }
+    if (!domicilioFiscal) {
+        alert('Por favor, complete el campo "Domicilio Fiscal".');
+        return;
+    }
+    if (!zipC) {
+        alert('Por favor, complete el campo "Código Postal" en "Datos Fiscales".');
+        return;
+    }
+    if (!domicilio) {
+        alert('Por favor, complete el campo "Domicilio" en "Datos Fiscales".');
+        return;
+    }
+    if (!tipoServicio) {
+        alert('Por favor, complete el campo "Tipo de Servicio".');
+        return;
+    }
+    if (!iban) {
+        alert('Por favor, complete el campo "IBAN".');
+        return;
+    }
+    if (!bic) {
+        alert('Por favor, complete el campo "BIC".');
+        return;
+    }
+
+    try {
+        const requestBody = {
+            date: `${day}/${month}/${year}`,
+            dpto: department,
+            seller: seller,
+            nombre_proveedor: clientName,
+            adress: direccion,
+            zip: zipC,
+            poblacion: poblacion,
+            nif: nif,
+            phone: tel,
+            email: email,
+            razon_social: razonSocial,
+            domicilio_fiscal: domicilioFiscal,
+            cp: zipC,
+            title: title,
+            tipo_servicio: tipoServicio,
+            iban: iban,
+            bic: bic
+        };
+
+        fetch('http://79.143.94.17:3000/generate-pdf-apertura_proveedor', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestBody)
+        })
+        .then(response => response.blob())
+        .then(blob => {
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            a.download = 'apertura_proveedor.pdf';
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+            alert('There was a problem with the fetch operation: ' + error.message);
+        });
+    } catch (error) {
+        console.error('There was an error:', error);
+        alert('There was an error: ' + error.message);
+    }
+}
+    </script>
 </body>
 </html>

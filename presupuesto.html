@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA10lEQVR4AWPAB14l8QS8KWE9/7aa+fzbSuYGBlLAcz8hh1fpXP8/dDL8/zKb4f+Hdsb/r3M4Gog3wFO44VUG0IAuoAFzoAZkcu0n2oBn1qIFL8IF/r8pZPsP9AKYfhHFv55oA55oigs8NRe7D/TK/xfBgv+B9Pvn3sIGhHV6T1YA4gYQlnRr7c+yjHxfZBP6v8gu1AGmhFhD3gPxfyi+z0AqAGtCGJBAqmYDSm0vIM92hAH7QZqh4SBAsn4k28EpjxIDFMg14DwYkwuAmgPA4UAmQMQEEQAAMxF5Mxxj/+MAAAAASUVORK5CYII=">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Presupuesto</title>
-    <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -20,7 +18,6 @@
             background-color: rgba(255, 255, 255, 0.8);
             border-radius: 8px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            position: relative;
         }
         h1 {
             text-align: center;
@@ -34,49 +31,16 @@
         label {
             font-weight: bold;
             margin-bottom: 10px;
-            display: block;
         }
-        input[type="number"],
-        input[type="date"],
-        input[type="text"],
-        input[type="checkbox"],
-        input[type="time"],
-        textarea {
-            width: calc(100% - 10px);
+        input, textarea {
+            width: 100%;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
-            box-sizing: border-box;
             font-size: 16px;
             margin-bottom: 10px;
         }
-        .checkbox-label {
-            display: inline-block;
-            margin-left: 10px;
-            vertical-align: middle;
-        }
-        .checkbox-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            grid-gap: 20px;
-        }
-        .grid-item {
-            display: flex;
-            flex-direction: column;
-        }
-        .pvp-container {
-            display: flex;
-            align-items: center;
-        }
-        .pvp-container input {
-            margin-left: 10px;
-        }
-        button[type="submit"] {
+        button {
             background-color: #343ec9;
             color: white;
             padding: 15px 40px;
@@ -84,40 +48,19 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
-            justify-self: center;
+            text-align: center;
         }
-        button[type="submit"]:hover {
+        button:hover {
             background-color: #311bab;
         }
-        .back-btn {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            width: 40px;
-            height: 40px;
-            background-color: #ff6347; /* Nuevo color rojo */
-            border-radius: 8px; /* Mayor redondez */
-            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Sombra difuminada */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-        }
-        .back-btn i {
-            color: white;
-            font-weight: bold;
-        }
-        .grid-item {
-            display: flex;
-            flex-direction: column;
-        }
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/docxtemplater/3.45.0/docxtemplater.js"></script>
+    <script src="https://unpkg.com/pizzip@3.1.6/dist/pizzip.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.js"></script>
+    <script src="https://unpkg.com/pizzip@3.1.6/dist/pizzip-utils.js"></script>
 </head>
 <body>
     <div class="container">
-        <div class="back-btn">
-            <i><</i>
-        </div>
         <h1>Contrato Viajes Combinados</h1>
         <form id="reservaForm">
             <div>
@@ -132,28 +75,75 @@
                 <label for="text_budget">Descripción del viaje:</label>
                 <textarea id="text_budget" name="text_budget" rows="4" required></textarea>
             </div>
-            <div class="grid-container">
-                <div class="grid-item">
-                    <label for="to_add_money">IBAN:</label>
-                    <input type="text" id="to_add_money" name="to_add_money" required>
-                </div>
-                <div class="grid-item">
-                    <label for="add_money_concept">Concepto:</label>
-                    <input type="text" id="add_money_concept" name="add_money_concept" required>
-                </div>
+            <div>
+                <label for="to_add_money">IBAN:</label>
+                <input type="text" id="to_add_money" name="to_add_money" required>
+            </div>
+            <div>
+                <label for="add_money_concept">Concepto:</label>
+                <input type="text" id="add_money_concept" name="add_money_concept" required>
             </div>
             <div>
                 <label for="tipo_servicio">PVP final:</label>
-                <div>
-                 
-                    <input type="number" step="0.01" id="tipo_servicio" name="tipo_servicio" required>
-                </div>
+                <input type="text" step="0.01" id="tipo_servicio" name="tipo_servicio" required>
             </div>
-            <button type="submit">Enviar</button>
+            <button type="button" onclick="sendData()">Enviar</button>
         </form>
     </div>
+
     <script>
-        CKEDITOR.replace('text_budget');
+        function sendData() {
+            const date = new Date();
+            const months = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+            var trip_name = document.getElementById('trip_name').value;
+            var title_budget = document.getElementById('title_budget').value;
+            var text_budget = document.getElementById('text_budget').value;
+            var to_add_money = document.getElementById('to_add_money').value;
+            var add_money_concept = document.getElementById('add_money_concept').value;
+            var tipo_servicio = document.getElementById('tipo_servicio').value;
+            var day = date.getDate();
+            var month = months[date.getMonth()];
+            var year = date.getUTCFullYear();
+
+            if (trip_name && title_budget && text_budget && to_add_money && add_money_concept && tipo_servicio && day && month && year) {
+                var data = {
+                    trip_name: trip_name,
+                    day: day,
+                    month: month,
+                    year: year,
+                    title_budget: title_budget,
+                    text_budget: text_budget,
+                    to_add_money: to_add_money,
+                    add_money_concept: add_money_concept,
+                    price: tipo_servicio
+                };
+
+                fetch('http://79.143.94.17:3000/generate-pdf-budget', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(response => response.blob())
+                .then(blob => {
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.style.display = 'none';
+                    a.href = url;
+                    a.download = 'budget.pdf';
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                    alert('There was a problem with the fetch operation: ' + error.message);
+                });
+            } else {
+                alert("Por favor, complete todos los campos antes de enviar el formulario.");
+            }
+        }
     </script>
 </body>
 </html>
